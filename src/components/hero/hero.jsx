@@ -13,7 +13,10 @@ class Hero extends React.Component {
           error: false
         }
         this.ServiceMovie = new ServiceMovie()
-        this.getMovie()
+    }
+
+    componentDidMount() {
+      this.getMovie()
     }
 
     getMovie = () => {
