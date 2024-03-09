@@ -12,33 +12,39 @@
         gap: 10px;
     
 
-     h2 {
+        h2 {
         font-size: 50px;
         line-height: normal;
         font-style: normal;
         font-weight: bold;
-     }
-     h1 {
-        font-size: 70px;
-        line-height: normal;
-        font-style: normal;
-        font-weight: bold;
-        background: linear-gradient(94deg, #2203ff 33.29%, #c40d60 67.01%);
-				background-clip: text;
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-     }
+        }
 
-     p {
-         color: #cecece;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-     }
+        h1 {
+          font-size: 70px;
+          line-height: normal;
+          font-style: normal;
+          font-weight: bold;
+          background: linear-gradient(94deg, #2203ff 33.29%, #c40d60 67.01%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+        }
 
-     button {
-        width: fit-content;
-     }
+        p {
+           color: #cecece;
+           font-style: normal;
+           font-weight: 400;
+           line-height: normal;
+        }
+
+        button {
+           width: fit-content;
+        }
+
+        div {
+            display: flex;
+            gap: 10px;
+        }
     }
 
     &__movie {
@@ -69,12 +75,6 @@
                 opacity: 0.7;
                 margin-top: 10px;
                 line-height: normal;
-            }
-
-            div {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
             }
         }
     }

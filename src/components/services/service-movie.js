@@ -26,7 +26,8 @@ class ServiceMovie {
     }
 
     getDetailedMovie = async (id) => {  //service 2
-        return this.getResource(`${this.__apiBase}/movie/${id}?&${this.__apiLng}&${this.__apikey}`)
+        const movie = await this.getResource(`${this.__apiBase}/movie/${id}?&${this.__apiLng}&${this.__apikey}`)
+        return this._transformMovie(movie)
     }
 
     getRandomMovie = async () => {

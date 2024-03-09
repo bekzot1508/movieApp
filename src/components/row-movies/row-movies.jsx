@@ -7,22 +7,23 @@ import MovieInfo from '../movie-info/movie-info';
 import ServiceMovie from "../services/service-movie";
 
 class RowMovies extends React.Component {
-    constructor() {
-        super()
-        this.state = {
+    state = {
             open: false,
-            movies: []
+            movies: [],
+            movieId: null
         }
-        this.ServiceMovie = new ServiceMovie()
-    }
+        ServiceMovie = new ServiceMovie()
 
     componentDidMount() {
         this.getTrandingMovies()
     }
 
-    onToggleOpen = () => {
-        this.setState(({open}) => ({open: !open}))
-    }
+    // onToggleOpen = () => {
+    //     this.setState(({open}) => ({open: !open}))
+    // }
+
+    onClose = () => this.setState({open: false})
+    onOpen = (id) => this.setState({open: true, movieId: id})
 
     getTrandingMovies = () => {
         this.ServiceMovie.getTrandingMovies()
@@ -32,8 +33,7 @@ class RowMovies extends React.Component {
     }
 
     render() {
-        const {open, movies} = this.state
-        console.log(movies);
+        const {open, movies, movieId} = this.state
         return (
             <div className='rowmovies'>
                 <div className="rowmovies__top">
@@ -50,13 +50,13 @@ class RowMovies extends React.Component {
                         <RowMoviesItem 
                           key={movie.id} 
                           movie={movie} 
-                          onToggleOpen={this.onToggleOpen}
+                          onOpen={this.onOpen}
                         />
                     ))}
                 </div>
         
-                <Modal open={open} onClose={this.onToggleOpen}>
-                    <MovieInfo/>
+                <Modal open={open} onClose={this.onClose}>
+                    <MovieInfo movieId={movieId}/>
                 </Modal>
             </div>
           )
