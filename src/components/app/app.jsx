@@ -4,6 +4,7 @@ import Navbar from '../navbar/navbar'
 import "../../styles/variables.scss"
 import RowMovies from '../row-movies/row-movies'
 import ServiceMovie from '../services/service-movie.js'
+import ErrorBoundary from '../error-boundary/error-boundary'
  
 
 function App() {
@@ -13,8 +14,15 @@ function App() {
   return (
     <div className='app'>
       <Navbar/>
-      <Hero/>
-      <RowMovies/>
+      
+      <ErrorBoundary>
+        <Hero/>
+      </ErrorBoundary>
+
+      <ErrorBoundary>
+        <RowMovies/>
+      </ErrorBoundary>
+      
     </div>
   )
 }
