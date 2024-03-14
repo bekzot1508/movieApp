@@ -1,34 +1,28 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import './hero.scss'
-import ServiceMovie from '../services/service-movie'
+import ServiceMovie from '../services/service-movie.js'
 import Spinner from '../spinner/spinner'
 import Error from '../error/error'
 
-class Hero extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-          movie: {},
-          loading: true,
-          error: false
-        }
-        this.ServiceMovie = new ServiceMovie()
-    }
+function Hero () {
+  const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-    componentDidMount() {
-      this.getUpdateMovie()
-    }
+  // const ServiceMovie = new ServiceMovie()
 
-    getUpdateMovie = () => {
-      this.setState({loading: true})
-      this.ServiceMovie.getRandomMovie()
-      .then(res => this.setState({movie: res}))
-      .catch(() => this.setState({error: true}))
-      .finally(() => this.setState({loading: false}))
-    }
+  useEffect (() => {
+    getUpdateMovie()
+  }, [])
 
-  render () {
-    const {movie, loading, error} = this.state
+   const getUpdateMovie = () => {
+      setLoading(true)
+
+     new ServiceMovie().getRandomMovie()
+      .then(res => setMovie(res))
+      .catch(() => setError(true))
+      .finally(() => setLoading(false))
+    }
 
     const errorContent = error ? <Error/> : null
     const loadingContent = loading ? <Spinner/> : null
@@ -44,7 +38,7 @@ class Hero extends React.Component {
                 </p>
                 <div>
                    <button  className='btn btn-primary'>details</button>
-                   <button className='btn btn-secondary' onClick={this.getUpdateMovie}>Random movie</button>
+                   <button className='btn btn-secondary' onClick={getUpdateMovie}>Random movie</button>
                 </div>
             </div>
     
@@ -55,7 +49,6 @@ class Hero extends React.Component {
             </div>
         </div>
       )
-  }
 }
 
 export default Hero

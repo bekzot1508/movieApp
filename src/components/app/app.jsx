@@ -15,13 +15,13 @@ function App() {
     <div className='app'>
       <Navbar/>
       
-      <ErrorBoundary>
+      
         <Hero/>
-      </ErrorBoundary>
+      
 
-      <ErrorBoundary>
+      
         <RowMovies/>
-      </ErrorBoundary>
+     
       
     </div>
   )
