@@ -3,25 +3,22 @@ import './hero.scss'
 import ServiceMovie from '../services/service-movie.js'
 import Spinner from '../spinner/spinner'
 import Error from '../error/error'
+import useServiceMovie from '../services/service-movie.js'
 
 function Hero () {
   const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
-  // const ServiceMovie = new ServiceMovie()
+  const {getRandomMovie, loading, error} = useServiceMovie()
 
   useEffect (() => {
     getUpdateMovie()
   }, [])
 
    const getUpdateMovie = () => {
-      setLoading(true)
+    // setLoading(true)
 
-     new ServiceMovie().getRandomMovie()
-      .then(res => setMovie(res))
-      .catch(() => setError(true))
-      .finally(() => setLoading(false))
+    getRandomMovie().then(res => setMovie(res))
+
     }
 
     const errorContent = error ? <Error/> : null

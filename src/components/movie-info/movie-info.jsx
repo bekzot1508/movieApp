@@ -3,13 +3,12 @@ import "./movie-info.scss"
 import ServiceMovie from '../services/service-movie'
 import Error from '../error/error'
 import Spinner from '../spinner/spinner'
+import useServiceMovie from '../services/service-movie'
 
 const MovieInfo = ({movieId}) => {
   const [movie, setMovie] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
  
-  // ServiceMovie = new ServiceMovie()
+  const {getDetailedMovie} = useServiceMovie()
 
   useEffect(() => {
     upDateMovies()
@@ -20,13 +19,7 @@ const MovieInfo = ({movieId}) => {
      return
     }
 
-    setLoading(true)
-
-   new ServiceMovie()
-    .getDetailedMovie(movieId)
-    .then(res => setMovie(res))
-    .catch(() => setError(true))
-    .finally(() => setLoading(false))
+    getDetailedMovie(movieId).then(res => setMovie(res))
   }
 
     const errorContent = error ? <Error/> : null

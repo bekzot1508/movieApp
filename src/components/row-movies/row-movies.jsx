@@ -4,47 +4,41 @@ import RowMoviesItem from '../row-movies-item/row-movies-item'
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import MovieInfo from '../movie-info/movie-info';
-import ServiceMovie from "../services/service-movie";
 import Error from '../error/error';
 import Spinner from '../spinner/spinner';
+import useServiceMovie from '../services/service-movie';
 
 const RowMovies = () => {
-const [loading, setLoading] = useState(true)
-const [error, setError] = useState(false)
 const [open, setOpen] = useState(false)
 const [movies, setMovies] = useState([])
 const [movieId, setMovieId] = useState(null)
 const [page, setPage] = useState(2)
 const [newItemLoading, setNewItemLoading] = useState(false)
 
-//  const ServiceMovie = new ServiceMovie()
+ const {getTrandingMovies, error, loading} = useServiceMovie()
 
     useEffect(() => {
-        getTrandingMovies()
+        getMovies()
     }, [])
 
     const onClose = () => setOpen(false)
+
     const onOpen = (id) => {
         setMovieId(id)
         setOpen(true)
     }
 
-    const getTrandingMovies = (page) => {
-
-    new ServiceMovie().getTrandingMovies(page)
+    const getMovies = (page) => {
+        getTrandingMovies(page)
         .then(res => setMovies(movies => [...movies, ...res]))
-        .catch(() => setError(true))
-        .finally(() => {
-            setLoading(false)
-            setNewItemLoading(false)
-        })
+        .finally(() => setNewItemLoading(false))
     }
 
 
     const getMoreMovies = () => {
         setPage(page => page + 1)
         setNewItemLoading(true)
-        getTrandingMovies(page) 
+        getMovies(page) 
     }
 
 
@@ -65,7 +59,7 @@ const [newItemLoading, setNewItemLoading] = useState(false)
               
                 {errorContent}
                 {loadingContent}
-                {content}
+                <Content movies={movies} onOpen={onOpen}/>3
 
                 <div className="rowmovies__loadmore">
                     <button 
