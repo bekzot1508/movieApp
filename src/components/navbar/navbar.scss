@@ -21,7 +21,10 @@
             li {
                 margin: 0 12px;
                 a:hover {
-                    color: $primary; //TODO 
+                    color: $primary; 
+                }
+                & .active {
+                    color: $primary;
                 }
             }
         }

@@ -10,8 +10,10 @@ const useServiceMovie = () => {
    const __page = 1
 
 
-   const getPopularMovies = async () => {  // service 1
-        return await request(`${__apiBase}/movie/popular?${__apiLng}&page=1&${__apikey}`)
+   const getPopularMovies = async (page = __page) => {  // service 1
+        const response = await request(`${__apiBase}/movie/popular?${__apiLng}&page=${page}&${__apikey}`)
+        const movies = response.results
+        return movies.map(movie => _transformMovie(movie))
     }
 
     const getTrandingMovies = async (page = __page) => {  // service 1
@@ -27,8 +29,8 @@ const useServiceMovie = () => {
 
     const getRandomMovie = async () => {
         const res = await getPopularMovies()
-        const movie = res.results[Math.floor(Math.random() * res.results.length)]
-        return _transformMovie(movie)
+        const movie = res[Math.floor(Math.random() * res.length)]
+        return movie
     }
 
     const _transformMovie = (movie) => {
@@ -46,6 +48,7 @@ const useServiceMovie = () => {
         getTrandingMovies, 
         getDetailedMovie, 
         getRandomMovie,
+        getPopularMovies,
         error, 
         loading, 
         clearError

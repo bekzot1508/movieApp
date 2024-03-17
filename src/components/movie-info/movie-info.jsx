@@ -1,14 +1,14 @@
 import {useState, useEffect} from 'react'
 import "./movie-info.scss"
-import ServiceMovie from '../services/service-movie'
 import Error from '../error/error'
 import Spinner from '../spinner/spinner'
 import useServiceMovie from '../services/service-movie'
+import { useNavigate } from 'react-router-dom'
 
 const MovieInfo = ({movieId}) => {
   const [movie, setMovie] = useState(null)
  
-  const {getDetailedMovie} = useServiceMovie()
+  const {getDetailedMovie, error, loading} = useServiceMovie()
 
   useEffect(() => {
     upDateMovies()
@@ -39,6 +39,7 @@ const MovieInfo = ({movieId}) => {
 export default MovieInfo
 
 const Content = ({movie}) => {
+  const navigate = useNavigate()
   return(
       <>
         <img src={movie.backdrop_path} alt="img" />
@@ -46,6 +47,11 @@ const Content = ({movie}) => {
         <div className="hero__movie-descr">
             <h2>{movie.name}</h2>
             <p>{movie.description}</p>
+
+            <button 
+              className='btn btn-light'
+              onClick={() => navigate(`/movie/${movie.id}`)}
+              >Details</button>
 
             {/* <div className="movieitem__descr">
                 <p>{movie.release_date}</p>

@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import './hero.scss'
-import ServiceMovie from '../services/service-movie.js'
 import Spinner from '../spinner/spinner'
 import Error from '../error/error'
 import useServiceMovie from '../services/service-movie.js'
@@ -51,6 +51,7 @@ function Hero () {
 export default Hero
 
 const Content = ({movie}) => {
+  const navigate = useNavigate()
   return(
       <>
         <img src={movie.backdrop_path} alt="img" />
@@ -62,7 +63,12 @@ const Content = ({movie}) => {
              : movie.description}</p>
 
           
-             <button className='btn btn-primary'>Details</button>
+             <button 
+               className='btn btn-primary'
+               onClick={() => navigate(`/movie/${movie.id}`)}
+              >
+                Details
+              </button>
           
        </div>
       </>

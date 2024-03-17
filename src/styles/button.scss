@@ -43,5 +43,18 @@
 		}
 	}
 
+    &-light {
+		background-color: #000;
+		border: 1px solid #fff;
+		color: #fff;
+
+		&:hover {
+			color: #fff;
+			background-color: rgba(0, 0, 0, 0.849);
+			border-color: rgba(255, 255, 255, 0.1);
+		}
+
+	}
+
 
 }

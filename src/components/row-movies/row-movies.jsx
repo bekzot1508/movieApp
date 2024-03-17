@@ -7,6 +7,7 @@ import MovieInfo from '../movie-info/movie-info';
 import Error from '../error/error';
 import Spinner from '../spinner/spinner';
 import useServiceMovie from '../services/service-movie';
+import { useLocation, useRoutes } from 'react-router-dom';
 
 const RowMovies = () => {
 const [open, setOpen] = useState(false)
@@ -15,7 +16,10 @@ const [movieId, setMovieId] = useState(null)
 const [page, setPage] = useState(2)
 const [newItemLoading, setNewItemLoading] = useState(false)
 
- const {getTrandingMovies, error, loading} = useServiceMovie()
+const {pathname} = useLocation()
+console.log(pathname);
+
+ const {getTrandingMovies, getPopularMovies, error, loading} = useServiceMovie()
 
     useEffect(() => {
         getMovies()
@@ -29,9 +33,15 @@ const [newItemLoading, setNewItemLoading] = useState(false)
     }
 
     const getMovies = (page) => {
-        getTrandingMovies(page)
-        .then(res => setMovies(movies => [...movies, ...res]))
-        .finally(() => setNewItemLoading(false))
+        if (pathname === "/popular") {
+            getPopularMovies(page)
+            .then(res => setMovies(movies => [...movies, ...res]))
+            .finally(() => setNewItemLoading(false))
+        } else {
+             getTrandingMovies(page)
+            .then(res => setMovies(movies => [...movies, ...res]))
+            .finally(() => setNewItemLoading(false))
+        }
     }
 
 
@@ -51,7 +61,7 @@ const [newItemLoading, setNewItemLoading] = useState(false)
                 <div className="rowmovies__top">
                     <div className="rowmovies__top-title">
                         <img src="/public/tranding.svg" alt="trend" />
-                        <h1>trending</h1>
+                        <h1>{pathname === "/popular" ? "Popular" : "Tranding"}</h1>
                     </div>
                     <div className="hr"/>
                     <a href="#">See More</a>
