@@ -1,18 +1,16 @@
-import React from 'react'
-import Hero from '../hero/hero'
+import {lazy, Suspense} from 'react'
 import Navbar from '../navbar/navbar'
 import "../../styles/variables.scss"
-import RowMovies from '../row-movies/row-movies'
-
 import ErrorBoundary from '../error-boundary/error-boundary'
 import useServiceMovie from '../services/service-movie.js'
 import {Route, Routes } from 'react-router-dom'
-import HomePage from '../pages/home-page'
-import Popular from '../pages/popular-page'
-import DetailedPage from '../pages/detailed-page'
-import NotFoundPage from '../pages/not-found-page'
-import TrandingPage from '../pages/tranding-page'
+import Spinner from '../spinner/spinner'
  
+const NotFoundPage = lazy(()=> import('../pages/not-found-page'))
+const HomePage = lazy(() => import('../pages/home-page'))
+const TrandingPage = lazy(() => import('../pages/tranding-page'))
+const Popular = lazy(() => import('../pages/popular-page'))
+const DetailedPage = lazy(() => import('../pages/detailed-page'))
 
 function App() {
 
@@ -21,13 +19,15 @@ function App() {
   return (
     <div className='app'>
       <Navbar/>
-      <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/tranding' element={<TrandingPage/>}/>
-        <Route path='/popular' element={<Popular/>}/>
-        <Route path='/movie/:movieId' element={<DetailedPage/>}/>
-        <Route path='*' element={<NotFoundPage/>}/>
-      </Routes>
+      <Suspense fallback={<Spinner/>}>
+        <Routes>
+          <Route path='/' element={<HomePage/>}/>
+          <Route path='/tranding' element={<TrandingPage/>}/>
+          <Route path='/popular' element={<Popular/>}/>
+          <Route path='/movie/:movieId' element={<DetailedPage/>}/>
+          <Route path='*' element={<NotFoundPage/>}/>
+        </Routes>
+      </Suspense>
 
     </div>
   )
